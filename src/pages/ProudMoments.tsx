@@ -215,14 +215,13 @@ className: "hidden md:block bottom-[22%] right-[5%] md:right-[15%] w-24 h-24 md:
 
 function AwardsHero() {
   const containerRef = useRef<HTMLDivElement>(null);
-
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
-// Consolidated timer: Clean, single source of truth for 4.5s intervals
+  // Cleaned up duplicate timers - Single source of truth for the interval
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWordIndex((prev) => (prev + 1) % WORDS.length);
-    }, 8500); // 4.5 seconds per word
+    }, 3500); // Adjusted to 3.5s for a better reading pace
 
     return () => clearInterval(interval);
   }, []);
@@ -242,15 +241,6 @@ function AwardsHero() {
   const yearsParallax = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const textParallax = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
-useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prev) => (prev + 1) % WORDS.length);
-    }, 3500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const { left, top } = containerRef.current.getBoundingClientRect();
@@ -262,8 +252,7 @@ useEffect(() => {
     <section 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      // Added heavy top padding (pt-40 lg:pt-52) to clear navbars
-      className="relative min-h-[80svh] w-full pt-20 lg:pt-32 pb-10 flex items-start lg:items-center justify-center bg-[#FCFCFC] dark:bg-[#070707] overflow-hidden font-sans selection:bg-blue-600/30 px-4"
+      className="relative min-h-[80svh] w-full pt-28 lg:pt-32 pb-10 flex items-start lg:items-center justify-center bg-[#FCFCFC] dark:bg-[#070707] overflow-hidden font-sans selection:bg-blue-600/30 px-4 md:px-8"
     >
       {/* Background Texture: Subtle Grain */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.02] z-50 mix-blend-difference" 
@@ -311,43 +300,41 @@ useEffect(() => {
 
       {/* MAIN CENTERED TYPOGRAPHY */}
       <motion.div 
-  style={{ y: textParallax }}
-  className="relative z-30 w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center mt-12 md:mt-0 px-4"
->
-  {/* Eyebrow */}
-  <motion.div
-    initial={{ opacity: 0, scale: 0.9 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 1, ease: EASE }}
-    className="flex items-center justify-center gap-4 mb-8"
-  >
-    <div className="w-8 md:w-12 h-[1px] bg-neutral-300 dark:bg-neutral-700" />
-    <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] text-neutral-500 uppercase">
-      The Digital Gallery
-    </span>
-    <div className="w-8 md:w-12 h-[1px] bg-neutral-300 dark:bg-neutral-700" />
-  </motion.div>
+        style={{ y: textParallax }}
+        className="relative z-30 w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center mt-6 md:mt-0 px-2"
+      >
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: EASE }}
+          className="flex items-center justify-center gap-3 md:gap-4 mb-6 md:mb-8"
+        >
+          <div className="w-6 md:w-12 h-[1px] bg-neutral-300 dark:bg-neutral-700" />
+          <span className="font-mono text-[11px] md:text-xs tracking-[0.3em] text-neutral-500 uppercase">
+            The Digital Gallery
+          </span>
+          <div className="w-6 md:w-12 h-[1px] bg-neutral-300 dark:bg-neutral-700" />
+        </motion.div>
 
-  {/* Poster Headline - Using flex-wrap for responsiveness */}
-  <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight text-neutral-900 dark:text-white leading-[1.1] mb-8 w-full flex flex-col items-center">
-    <motion.span {...BLUR_REVEAL} className="block w-full">
-      Celebrating
-    </motion.span>
-    
-    {/* Rolling Word - Removed fixed height, added padding/margins for safety */}
-{/* Rolling Word Container */}
-<div className="relative w-full flex justify-center h-[1.1em] my-2 overflow-visible">
+        {/* Poster Headline - Increased base mobile text from 4xl to 5xl */}
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight text-neutral-900 dark:text-white leading-[1.1] mb-6 md:mb-8 w-full flex flex-col items-center">
+          <motion.span variants={BLUR_REVEAL} initial="initial" animate="animate" className="block w-full">
+            Celebrating
+          </motion.span>
+          
+          {/* Rolling Word Container - Increased vertical margin (my-3) to prevent clipping at smaller screen sizes */}
+          <div className="relative w-full flex justify-center h-[1.1em] my-3 overflow-visible">
             <AnimatePresence>
               <motion.span
                 key={WORDS[currentWordIndex]}
                 className="absolute text-blue-600 dark:text-[#2563EB] italic font-serif lowercase text-center w-full px-2"
-                // 3. Smoother vertical distance using percentages so it scales with text size perfectly
                 initial={{ y: "40%", opacity: 0, filter: "blur(4px)" }}
                 animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
                 exit={{ y: "-40%", opacity: 0, filter: "blur(4px)" }}
                 transition={{ 
-                  duration: 0.8, // Slightly longer duration for luxury feel
-                  ease: [0.16, 1, 0.3, 1] // Custom butter-smooth ease-out
+                  duration: 0.8, 
+                  ease: [0.16, 1, 0.3, 1] 
                 }}
               >
                 {WORDS[currentWordIndex]}
@@ -364,24 +351,22 @@ useEffect(() => {
           >
             Moments.
           </motion.span>
-  </h1>
-  
-  {/* Premium Description */}
-  <motion.p
-    variants={BLUR_REVEAL}
-    initial="initial"
-    animate="animate"
-    transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}
-    className="max-w-xl text-neutral-500 dark:text-neutral-400 text-sm md:text-base font-light leading-relaxed mb-16 px-4"
-  >
-    At Digital Graphics, we understand the power of appreciation. That's why we've launched Proud Moment by Digital Graphics — a brand dedicated to celebrating achievements with meaningful design.
-  </motion.p>
-</motion.div>
+        </h1>
+        
+        {/* Premium Description - Increased from text-sm to text-base for mobile readability */}
+        <motion.p
+          variants={BLUR_REVEAL}
+          initial="initial"
+          animate="animate"
+          transition={{ duration: 1.4, ease: EASE, delay: 0.2 }}
+          className="max-w-2xl text-neutral-600 dark:text-neutral-400 text-base md:text-lg lg:text-xl font-light leading-relaxed mb-16 px-4"
+        >
+          At Digital Graphics, we understand the power of appreciation. That's why we've launched <strong className="font-medium text-neutral-800 dark:text-neutral-200">Proud Moment by Digital Graphics</strong> — a brand dedicated to celebrating achievements with meaningful design.
+        </motion.p>
+      </motion.div>
     </section>
   );
 }
-
-
 
 const CHAPTERS: Chapter[] = [
   { id: "01", title: "Custom Trophy Design", desc: "Unique, theme-based trophy designs tailored to your event. Crafted with precision using premium materials, engraving, and storytelling-driven aesthetics.",accent: "#FFB800" },
