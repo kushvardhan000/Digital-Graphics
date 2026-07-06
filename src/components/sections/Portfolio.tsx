@@ -351,7 +351,7 @@ export function Portfolio() {
       <div className="hidden lg:flex w-full h-full select-none">
         
         {/* Persistent Editorial Panel (30%) */}
-        <div className="w-[30%] h-full flex flex-col justify-between border-r border-border/40 p-12 relative z-20 bg-background">
+        <div className="w-[35%] h-full flex flex-col justify-between border-r border-border/40 p-12 relative z-20 bg-background">
           
           {/* ZONE A — Permanent Section Heading */}
           <div className="space-y-8 pt-2">
@@ -360,11 +360,11 @@ export function Portfolio() {
               Chapter 03
             </p>
             <h2 className="font-serif text-6xl xl:text-7xl tracking-tight text-foreground leading-[1.02]">
-              Selected <br />
-              <span className="italic text-muted-foreground">Archive.</span>
+              Work That <br />
+              <span className="italic text-muted-foreground">Speaks.</span>
             </h2>
             <p className="text-[11px] sm:text-xs text-muted-foreground max-w-[88%] leading-[1.7] font-light">
-              A curated collection of CGI, motion design, visual storytelling and digital experiences.
+                A curated showcase of creativity, strategy and impact-brought to life for brands across industries.
             </p>
           </div>
 

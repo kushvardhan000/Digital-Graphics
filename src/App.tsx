@@ -1,43 +1,13 @@
-import { Capabilities } from "./components/sections/Capabilities"
-import { EditorsLetter } from "./components/sections/EditorsLetter"
-// import { FeaturedStory } from "./components/sections/FeaturedStory"
-import { Hero } from "./components/sections/Hero"
-import { ContactSection } from "./components/sections/Contact"
-// import { Interlude } from "./components/sections/Interlude"
-import { Marquee } from "./components/sections/Marquee"
-import { Portfolio } from "./components/sections/Portfolio"
-// import { ProcessChapters } from "./components/sections/ProcessChapters"
-// import { Stats } from "./components/sections/Stats"
-import { Testimonials } from "./components/sections/Testimonials"
-import { ClientSection } from "./components/sections/Clients"
+import { Routes, Route } from "react-router-dom";
 
+import Home from "./pages/Home";
+import ProudMoments from "./pages/ProudMoments";
 
-
-function App() {
-  return  <>
-      <Hero />
-      <Marquee />
-      <EditorsLetter />
-      {/* <Interlude
-        kicker="Margin Note"
-        quote="A brand is not what you say about yourself; it is what the room says when you leave it."
-        attribution="Studio principle Nº 1"
-      /> */}
-      
-      <Capabilities />
-      <ClientSection />
-      {/* <FeaturedStory /> */}
-      <Portfolio />
-      {/* <Interlude
-        kicker="Margin Note"
-        quote="Restraint is the loudest move in a room full of noise."
-        attribution="Studio principle Nº 7"
-      /> */}
-      {/* <ProcessChapters /> */}
-      <Testimonials />
-      <ContactSection />
-      {/* <CTA /> */}
-    </>
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/proud-moments" element={<ProudMoments />} />
+    </Routes>
+  );
 }
-
-export default App

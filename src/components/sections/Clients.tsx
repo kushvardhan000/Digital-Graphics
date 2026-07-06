@@ -4,18 +4,17 @@ import { motion, useAnimationFrame, useMotionValue, useSpring, useTransform } fr
 
 // Curated list of bulletproof, transparent, high-color SVGs 
 // that look perfect on BOTH Light and Dark themes natively.
-const logos = [
-  "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+const logos: LogoItem[] = [
+  { src: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg", name: "Google" },
+  { src: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg", name: "Microsoft" },
+  { src: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg", name: "Figma" },
+  { src: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg", name: "Netflix" },
+  { src: "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg", name: "Spotify" },
+  { src: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg", name: "Slack" },
+  { src: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg", name: "Meta" },
+  { src: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", name: "Mastercard" },
+  { src: "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg", name: "PayPal" }
 ];
-
 export function ClientSection() {
   return (
     <section id="clients" className="w-full bg-background overflow-hidden border-b border-border/40 scroll-mt-[70px] md:scroll-mt-[80px]">
@@ -35,9 +34,12 @@ export function ClientSection() {
     </section>
   );
 }
+interface LogoItem {
+  src: string;
+  name: string;
+}
 
-function SmoothMarquee({ items, direction = "left" }: { items: string[]; direction?: "left" | "right" }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+function SmoothMarquee({ items, direction = "left" }: { items: LogoItem[]; direction?: "left" | "right" }) {  const containerRef = useRef<HTMLDivElement>(null);
   const [contentWidth, setContentWidth] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -104,43 +106,42 @@ function SmoothMarquee({ items, direction = "left" }: { items: string[]; directi
 
   return (
     <div 
-      className="flex w-full overflow-hidden border-b border-border/40 last:border-b-0"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      // Add touch events for mobile smooth stopping
-      onTouchStart={() => setIsHovered(true)}
-      onTouchEnd={() => setIsHovered(false)}
-    >
-      <motion.div
-        ref={containerRef}
-        className="flex w-max"
-        style={{ x }}
-      >
-        {/* Render 3 identical sets to guarantee the screen is always filled */}
-        {[1, 2, 3].map((set) => (
-          <div key={set} className="flex w-max shrink-0">
-            {items.map((src, i) => (
-              <div 
-                key={`${set}-${i}`} 
-                className="flex h-24 w-40 md:h-36 md:w-72 lg:h-40 lg:w-80 items-center justify-center border-r border-border/40 shrink-0 group transition-colors duration-500 hover:bg-muted/30 cursor-pointer"
-              >
-                <div className="relative flex items-center justify-center h-10 w-24 md:h-14 md:w-32 lg:h-16 lg:w-36 transition-transform duration-500 ease-[0.22,1,0.36,1] group-hover:scale-110">
-                  <img 
-                    src={src} 
-                    alt="Brand Partner Logo" 
-                    className="h-full w-full object-contain"
-                    loading="lazy"
-                    // Fallback just in case a network error occurs
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
+  className="flex w-full overflow-hidden border-b border-border/40 last:border-b-0"
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+  onTouchStart={() => setIsHovered(true)}
+  onTouchEnd={() => setIsHovered(false)}
+>
+  <motion.div
+    ref={containerRef}
+    className="flex w-max"
+    style={{ x }}
+  >
+    {[1, 2, 3].map((set) => (
+      <div key={set} className="flex w-max shrink-0">
+        {items.map((item, i) => (
+          <div 
+            key={`${set}-${i}`} 
+            className="flex h-24 w-40 md:h-36 md:w-72 lg:h-40 lg:w-80 items-center justify-center border-r border-border/40 shrink-0 group transition-colors duration-500 hover:bg-muted/30 cursor-pointer"
+          >
+            <div className="relative h-10 w-24 md:h-14 md:w-32 lg:h-16 lg:w-36 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110">
+              <img
+                src={item.src}
+                alt={`${item.name} - Digital Graphics Brand Partner`}
+                className="h-full w-full object-contain"
+                loading="lazy"
+                decoding="async"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
+              <span className="sr-only">{item.name} Logo</span>
+            </div>
           </div>
         ))}
-      </motion.div>
-    </div>
+      </div>
+    ))}
+  </motion.div>
+</div>
   );
 }

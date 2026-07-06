@@ -143,18 +143,17 @@ export function Hero() {
           <h1 className="flex flex-col font-sans text-[clamp(2.5rem,8vw,8rem)] font-bold leading-[1.1] tracking-[-0.03em] uppercase md:leading-[0.9]">
             <span>Digital</span>
             <span className="font-serif italic font-normal text-primary">
-              Visual
+              Creative
             </span>
             <span>Experiences</span>
           </h1>
 
           <div className="mt-3 flex flex-wrap items-center gap-8 sm:mt-6 lg:mt-12">
             <p className="max-w-75 text-sm leading-relaxed text-muted-foreground">
-              Pushing the boundaries of pixels. We engineer photorealistic
-              environments and digital identities.
+              We don't just create graphics. We craft visual identities, campaigns, and experiences that make brands impossible to ignore.
             </p>
             <MagneticButton>
-              View Projects <MoveRight className="h-3 w-3" />
+              Explore Our Work <MoveRight className="h-4 w-4" />
             </MagneticButton>
           </div>
         </div>
@@ -179,11 +178,15 @@ export function Hero() {
               >
                 <div className="absolute inset-0 z-10 bg-gradient-to-tr from-black/40 to-transparent mix-blend-overlay" />
 
-                <img
-                  src={src}
-                  alt={`Render ${i + 1}`}
-                  className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                />
+<img
+                      src={src}
+                      alt={`Digital Graphics Creative Work - Image ${i + 1}`}
+                      width={i === 0 ? "1200" : "800"}
+                      height={i === 0 ? "900" : "600"}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
 
                 {i === 0 && (
                   <div className="absolute bottom-5 left-5 z-20 flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[9px] font-bold tracking-widest text-white uppercase opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">

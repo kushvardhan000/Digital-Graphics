@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://digitalgraphicsindia.com/sitemap.xml
+
+# Disallow admin and private paths
+Disallow: /admin/
+Disallow: /api/
+
+# Allow all other paths for crawling
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /

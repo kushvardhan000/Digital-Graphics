@@ -41,10 +41,11 @@ export function ContactSection() {
     {/* NEW COMPONENT HERE - Only shows on LG+ screens */}
     <ServiceHighlights />
   </div>
+  
 
   <div className="space-y-6">
-    <ContactLink icon={<Mail size={18} />} text="hello@digitalgraphics.in" />
-    <ContactLink icon={<Phone size={18} />} text="+91 93081 99900" />
+    <ContactLink icon={<Mail size={18} />} text="digitalgraphicsranchi@gmail.com" />
+    <ContactLink icon={<Phone size={18} />} text="+91 6205114112" />
     <ContactLink icon={<MapPin size={18} />} text="Ranchi, Jharkhand, India" />
   </div>
 </div>
@@ -57,34 +58,36 @@ export function ContactSection() {
       <p className="text-neutral-500">Thank you for reaching out. We'll be in touch shortly.</p>
     </div>
   ) : (
-    <form onSubmit={handleSubmit} className="w-full max-w-xl space-y-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <FormInput label="Full Name" placeholder="John Doe" required />
-        <FormInput label="Email" placeholder="john@company.com" type="email" required />
-      </div>
-      
-      <FormInput label="Company" placeholder="Your Agency" />
-      
-      <div className="space-y-2">
-        <label className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 dark:text-neutral-500">Message</label>
-        <textarea 
-  required
-  rows={4}
-  className="w-full bg-transparent border-b border-neutral-300 dark:border-neutral-700 
-             py-3 focus:outline-none focus:border-black dark:focus:border-white 
-             text-black dark:text-white transition-colors resize-none" 
-  placeholder="Tell us about your project goals..."
-/>
-      </div>
+<form onSubmit={handleSubmit} className="w-full max-w-xl space-y-10" aria-label="Contact Form">
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+         <FormInput label="Full Name" placeholder="John Doe" required />
+         <FormInput label="Email" placeholder="john@company.com" type="email" required />
+       </div>
+       
+       <FormInput label="Company" placeholder="Your Agency" />
+       
+       <div className="space-y-2">
+         <label className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 dark:text-neutral-500" htmlFor="contact-message">Message</label>
+         <textarea 
+   id="contact-message"
+   required
+   rows={4}
+   className="w-full bg-transparent border-b border-neutral-300 dark:border-neutral-700 
+          py-3 focus:outline-none focus:border-black dark:focus:border-white 
+          text-black dark:text-white transition-colors resize-none" 
+   placeholder="Tell us about your project goals..."
+  />
+       </div>
 
-      <button 
-        disabled={status === 'loading'}
-        className="flex items-center gap-3 bg-black dark:bg-white text-white dark:text-black px-8 py-4 uppercase text-[10px] tracking-[0.2em] font-bold hover:opacity-80 transition-opacity disabled:opacity-50"
-      >
-        {status === 'loading' ? "Sending..." : "Send Message"}
-        <ArrowRight size={14} />
-      </button>
-    </form>
+       <button 
+         disabled={status === 'loading'}
+         className="flex items-center gap-3 bg-black dark:bg-white text-white dark:text-black px-8 py-4 uppercase text-[10px] tracking-[0.2em] font-bold hover:opacity-80 transition-opacity disabled:opacity-50"
+   aria-label={status === 'loading' ? "Sending message" : "Send message"}
+       >
+         {status === 'loading' ? "Sending..." : "Send Message"}
+         <ArrowRight size={14} />
+       </button>
+     </form>
   )}
 </div>
       </div>
@@ -101,7 +104,12 @@ function ContactLink({ icon, text }: { icon: React.ReactNode; text: string }) {
   );
 }
 
-function FormInput({ label, placeholder, type = "text", required = false }: any) {
+function FormInput({ label, placeholder, type = "text", required = false }: { 
+  label: string; 
+  placeholder: string; 
+  type?: string; 
+  required?: boolean 
+}) {
   return (
     <div className="space-y-2">
       <label className="text-[10px] uppercase tracking-widest font-bold">{label}</label>
